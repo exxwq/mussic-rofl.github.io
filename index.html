@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>rofl</title>
+    <title>Музыкальный сайт</title>
     <style>
         body {
             margin: 0;
@@ -20,24 +20,33 @@
     </style>
 </head>
 <body>
-    <audio id="music" loop autoplay>
+    <audio id="music" loop>
         <source src="1.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает элемент audio.
     </audio>
 
     <script>
+        // Функция для запуска аудио
+        function playAudio() {
+            const audio = document.getElementById('music');
+            audio.volume = 1; 
+
+            // Запускаем воспроизведение аудио
+            audio.play().catch(error => {
+                console.log("Автовоспроизведение заблокировано. Пожалуйста, нажмите на экран для запуска.");
+            });
+        }
+
+
         document.documentElement.requestFullscreen();
 
-        const audio = document.getElementById('music');
-        audio.volume = 1;
-
-
-        audio.play().catch(error => {
-            console.log("Автовоспроизведение заблокировано. Пожалуйста, нажмите на экран для запуска.");
-        });
 
         document.addEventListener('click', () => {
-            audio.play();
+            playAudio();
         });
+
+        // Пробуем запустить аудио сразу, возможно потребуется дополнительное взаимодействие
+        playAudio();
     </script>
 </body>
 </html>
