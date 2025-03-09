@@ -7,15 +7,20 @@
     <style>
         body {
             margin: 0;
-            overflow: hidden;
-        }
-        video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
+            overflow: hidden; /* Убираем прокрутку */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            object-fit: cover;
+            background-color: black; /* Фон для полноэкранного режима */
+        }
+        #playButton {
+            padding: 20px;
+            font-size: 24px;
+            color: white;
+            background-color: red; /* Кнопка запуска */
+            border: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -25,28 +30,30 @@
         Ваш браузер не поддерживает элемент audio.
     </audio>
 
+    <button id="playButton">Запустить музыку</button>
+
     <script>
-        // Функция для запуска аудио
+        const audio = document.getElementById('music');
+        const playButton = document.getElementById('playButton');
+
+        // Функция для запуска аудио и перехода в полноэкранный режим
         function playAudio() {
-            const audio = document.getElementById('music');
-            audio.volume = 1; 
+            audio.volume = 1; // Устанавливаем громкость на максимум
 
             // Запускаем воспроизведение аудио
-            audio.play().catch(error => {
-                console.log("Автовоспроизведение заблокировано. Пожалуйста, нажмите на экран для запуска.");
+            audio.play().then(() => {
+                document.documentElement.requestFullscreen();
+                playButton.style.display = 'none'; // Скрываем кнопку после запуска
+            }).catch(error => {
+                console.log("Не удалось запустить звук:", error);
             });
         }
 
+        // Добавляем обработчик клика на кнопку
+        playButton.addEventListener('click', playAudio);
 
-        document.documentElement.requestFullscreen();
-
-
-        document.addEventListener('click', () => {
-            playAudio();
-        });
-
-        // Пробуем запустить аудио сразу, возможно потребуется дополнительное взаимодействие
-        playAudio();
+        // Пробуем запустить аудио сразу (может не сработать из-за ограничений)
+        // playAudio();
     </script>
 </body>
 </html>
