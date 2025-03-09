@@ -14,46 +14,40 @@
             height: 100vh;
             background-color: black; /* Фон для полноэкранного режима */
         }
-        #playButton {
-            padding: 20px;
-            font-size: 24px;
-            color: white;
-            background-color: red; /* Кнопка запуска */
-            border: none;
+        .playSquare {
+            width: 500px; /* Ширина квадрата */
+            height: 500px; /* Высота квадрата */
+            background-color: white; /* Цвет квадрата */
             cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <audio id="music" loop>
-        <source src="1.mp3" type="audio/mpeg">
-        Ваш браузер не поддерживает элемент audio.
-    </audio>
-
-    <button id="playButton">Запустить музыку</button>
+    <audio class="audio" id="audio" src="1.mp3" loop autoplay></audio>
+    <div class="playSquare"></div> <!-- Квадрат для запуска музыки -->
 
     <script>
-        const audio = document.getElementById('music');
-        const playButton = document.getElementById('playButton');
+        let audio = document.getElementById('audio');
 
-        // Функция для запуска аудио и перехода в полноэкранный режим
-        function playAudio() {
-            audio.volume = 1; // Устанавливаем громкость на максимум
-
-            // Запускаем воспроизведение аудио
-            audio.play().then(() => {
+        // Обработчик событий для клика по квадрату
+        document.querySelector('.playSquare').addEventListener('click', function() {
+            // Включаем звук, если он был нажат
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    console.error("Не удалось запустить звук:", error);
+                });
+            }
+            // Переход в полноэкранный режим
+            if (document.documentElement.requestFullscreen) {
                 document.documentElement.requestFullscreen();
-                playButton.style.display = 'none'; // Скрываем кнопку после запуска
-            }).catch(error => {
-                console.log("Не удалось запустить звук:", error);
-            });
-        }
-
-        // Добавляем обработчик клика на кнопку
-        playButton.addEventListener('click', playAudio);
-
-        // Пробуем запустить аудио сразу (может не сработать из-за ограничений)
-        // playAudio();
+            } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                document.documentElement.mozRequestFullScreen();
+            } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari и Opera
+                document.documentElement.webkitRequestFullscreen();
+            } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                document.documentElement.msRequestFullscreen();
+            }
+        });
     </script>
 </body>
 </html>
