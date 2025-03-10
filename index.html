@@ -16,8 +16,8 @@
             cursor: pointer; /* Курсор указывает на возможность клика */
         }
         .playButton {
-            width: 100px; /* Ширина кнопки */
-            height: 100px; /* Высота кнопки */
+            width: 300px; /* Ширина кнопки */
+            height: 300px; /* Высота кнопки */
             background-color: white; /* Цвет кнопки */
             border: none; /* Убираем границу */
             border-radius: 50%; /* Делает кнопку круглой */
@@ -36,8 +36,12 @@
 </head>
 <body>
     <audio class="audio" id="audio" src="1.mp3" loop></audio>
-    <button class="playButton">▶️</button> <!-- Кнопка плей -->
-
+    <button class="playButton" aria-label="Play">
+        <!-- Вставляем SVG вместо кнопки -->
+        <svg xmlns="https://www.svgrepo.com/show/240109/play-button.svg" viewBox="0 0 24 24" fill="black" width="300" height="300">
+            <path d="M8 5v14l11-7z"/>
+        </svg>
+    </button>
     <script>
         let audio = document.getElementById('audio');
 
